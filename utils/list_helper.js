@@ -37,9 +37,29 @@ const mostBlogs = (list) => {
   return answer
 }
 
+const mostLikes = (list) => {
+  if (list.length === 0) return undefined
+  const blogsGrouped = lodash.groupBy(list, 'author')
+  // groups the blogs with their authors
+  const blogs = lodash.mapValues(blogsGrouped, e => lodash.mapValues(e, 'likes'))
+  // get the likes of all the blogs
+  const bloggersLikes = lodash.mapValues(blogs, (e) => lodash.values(e).reduce((a, b) => a + b))
+  // reduces the likes to a single value
+  const mostBlogs = Object.keys(bloggersLikes).reduce((a, b) => bloggersLikes[a] > bloggersLikes[b] ? a : b)
+  // gets the most liked author
+
+  const answer = {
+    author: mostBlogs,
+    likes: bloggersLikes[mostBlogs]
+  }
+
+  return answer
+}
+
 module.exports = {
   dummy,
   totalLikes,
   favoriteBlog,
-  mostBlogs
+  mostBlogs,
+  mostLikes
 }
