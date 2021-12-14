@@ -1,4 +1,3 @@
-const res = require('express/lib/response')
 const listHelper = require('../utils/list_helper')
 
 const blogList = [
@@ -100,6 +99,10 @@ describe('Most liked ', () => {
 })
 
 describe('Most blogs posted ', () => {
+  test('of a empty string should be undefined', () => {
+    const result = listHelper.mostBlogs([])
+    expect(result).toEqual(undefined)
+  })
   test('of a bigger list is calculated right', () => {
     const result = listHelper.mostBlogs(blogList)
     const expected = {

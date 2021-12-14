@@ -24,6 +24,7 @@ const favoriteBlog = (list) => {
 }
 
 const mostBlogs = (list) => {
+  if (list.length === 0) return undefined
   const blogsGrouped = lodash.groupBy(list, 'author')
   const blogs = lodash.mapValues(blogsGrouped, e => e.length)
   const mostBlogs = Object.keys(blogs).reduce((a, b) => blogs[a] > blogs[b] ? a : b)
