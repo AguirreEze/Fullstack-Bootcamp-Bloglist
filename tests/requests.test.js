@@ -65,6 +65,15 @@ describe('Testing Post request on /api/blogs', () => {
   })
 })
 
+describe('Testing Delete request on /api/blogs', () => {
+  test('Deleting a blog reduces the ammount of blogs', async () => {
+    const { body } = await api.get('/api/blogs')
+    await api.delete(`/api/blogs/${body[0].id}`)
+    const listAfter = await api.get('/api/blogs')
+    expect(listAfter.body).toHaveLength(initialBlogs.length - 1)
+  })
+})
+
 afterAll(() => {
   mongoose.connection.close()
   server.close()

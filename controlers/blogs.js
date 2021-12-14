@@ -27,4 +27,15 @@ const addNewBlog = (request, response, next) => {
     .catch(err => next(err))
 }
 
-module.exports = { getAllBlogs, addNewBlog }
+const deleteByID = (req, res, next) => {
+  const { id } = req.params
+
+  Blog.findByIdAndDelete(id)
+    .then(blog => {
+      if (blog === null) return res.json({ error: 'blog not found' }).status(400).end()
+      return res.json(blog).status(200).end()
+    })
+    .catch(err => next(err))
+}
+
+module.exports = { getAllBlogs, addNewBlog, deleteByID }

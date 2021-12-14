@@ -10,8 +10,8 @@ app.use(cors())
 app.use(express.json())
 
 app.get('/api/blogs', blogControlers.getAllBlogs)
-
 app.post('/api/blogs', blogControlers.addNewBlog)
+app.delete('/api/blogs/:id', blogControlers.deleteByID)
 
 app.use(errorHandler)
 
