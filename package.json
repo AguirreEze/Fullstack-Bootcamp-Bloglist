@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "NODE_ENV=development nodemon index.js",
     "start": "NODE_ENV=production node index.js",
-    "test": "NODE_ENV=test jest --verbose --detectOpenHandles --silent"
+    "test": "NODE_ENV=test jest --verbose --detectOpenHandles --silent",
+    "test:watch": "npm run test -- --watchAll"
+
   },
   "keywords": [],
   "author": "",

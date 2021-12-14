@@ -8,9 +8,7 @@ const api = supertest(app)
 
 beforeEach(async () => {
   await Blog.deleteMany({})
-  const blogObjects = initialBlogs.map(blog => new Blog(blog))
-  const promiseArray = blogObjects.map(blog => blog.save())
-  await Promise.all(promiseArray)
+  await Blog.insertMany(initialBlogs)
 })
 
 describe('testing Get request on /api/blogs', () => {
