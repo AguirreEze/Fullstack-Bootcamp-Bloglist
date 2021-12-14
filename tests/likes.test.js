@@ -114,6 +114,10 @@ describe('Most blogs posted ', () => {
 })
 
 describe('Most liked blogger', () => {
+  test('of a empty string should be undefined', () => {
+    const result = listHelper.mostLikes([])
+    expect(result).toEqual(undefined)
+  })
   test('of a bigger list is calculated right', () => {
     const result = listHelper.mostLikes(blogList)
     const expected = {
