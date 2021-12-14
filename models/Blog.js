@@ -1,7 +1,10 @@
 const { model, Schema } = require('mongoose')
 
 const blogSchema = new Schema({
-  title: String,
+  title: {
+    type: String,
+    required: true
+  },
   author: String,
   url: String,
   likes: Number

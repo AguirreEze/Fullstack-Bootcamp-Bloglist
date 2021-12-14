@@ -8,8 +8,6 @@ const api = supertest(app)
 
 beforeEach(async () => {
   await Blog.deleteMany({})
-  console.log('cleared')
-
   const blogObjects = initialBlogs.map(blog => new Blog(blog))
   const promiseArray = blogObjects.map(blog => blog.save())
   await Promise.all(promiseArray)
@@ -21,7 +19,7 @@ describe('testing Get request on /api/blogs', () => {
       .get('/api/blogs')
       .expect(200)
       .expect('Content-Type', /application\/json/)
-  })
+  }, 100000)
 
   test('returns the correct ammount of blogs', async () => {
     const res = await api.get('/api/blogs')
@@ -42,19 +40,30 @@ describe('Testing Post request on /api/blogs', () => {
       url: 'https://testing.test.com/',
       likes: 3
     }
-    await api.post('/api/blogs', newPost)
+    await api.post('/api/blogs', newPost).send(newPost)
     const res = await api.get('/api/blogs')
     expect(res.body).toHaveLength(initialBlogs.length + 1)
   })
 
-  test('Post request with missing likes properties will default to 0', async () => {
+  test('Post request missing likes properties will default to 0', async () => {
     const newPost = {
       title: 'Testing some Posts',
       author: 'Ezequiel',
       url: 'https://testing.test.com/'
     }
-    const res = await api.post('/api/blogs', newPost)
+    const res = await api.post('/api/blogs').send(newPost)
     expect(res.body.likes).toBe(0)
+  })
+
+  test('Post request missing title properties should return bad request', async () => {
+    const newPost = {
+      author: 'Ezequiel',
+      url: 'https://testing.test.com/',
+      likes: 0
+    }
+    await api.post('/api/blogs')
+      .send(newPost)
+      .expect(400)
   })
 })
 
