@@ -4,7 +4,7 @@ const getAllBlogs = (request, response) => {
   Blog
     .find({})
     .then(blogs => {
-      response.json(blogs)
+      response.json(blogs).end()
     })
     .catch(console.log)
 }
@@ -15,7 +15,7 @@ const addNewBlog = (request, response) => {
   blog
     .save()
     .then(result => {
-      response.status(201).json(result)
+      response.status(201).json(result).end()
     })
     .catch(console.log)
 }
