@@ -46,6 +46,16 @@ describe('Testing Post request on /api/blogs', () => {
     const res = await api.get('/api/blogs')
     expect(res.body).toHaveLength(initialBlogs.length + 1)
   })
+
+  test('Post request with missing likes properties will default to 0', async () => {
+    const newPost = {
+      title: 'Testing some Posts',
+      author: 'Ezequiel',
+      url: 'https://testing.test.com/'
+    }
+    const res = await api.post('/api/blogs', newPost)
+    expect(res.body.likes).toBe(0)
+  })
 })
 
 afterAll(() => {

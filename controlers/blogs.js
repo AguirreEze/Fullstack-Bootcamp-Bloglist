@@ -10,7 +10,14 @@ const getAllBlogs = (request, response) => {
 }
 
 const addNewBlog = (request, response) => {
-  const blog = new Blog(request.body)
+  const newBlog = {
+    title: request.body.title,
+    author: request.body.author,
+    url: request.body.url,
+    likes: request.body.likes || 0
+
+  }
+  const blog = new Blog(newBlog)
 
   blog
     .save()
