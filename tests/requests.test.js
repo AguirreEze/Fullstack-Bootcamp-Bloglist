@@ -34,9 +34,21 @@ describe('testing Get request on /api/blogs', () => {
   })
 })
 
+describe('Testing Post request on /api/blogs', () => {
+  test('Post request adds a blog', async () => {
+    const newPost = {
+      title: 'Testing some Posts',
+      author: 'Ezequiel',
+      url: 'https://testing.test.com/',
+      likes: 3
+    }
+    await api.post('/api/blogs', newPost)
+    const res = await api.get('/api/blogs')
+    expect(res.body).toHaveLength(initialBlogs.length + 1)
+  })
+})
+
 afterAll(() => {
-  console.log('test1')
   mongoose.connection.close()
-  console.log('test2')
   server.close()
 })
