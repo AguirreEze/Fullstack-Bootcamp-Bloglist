@@ -3,6 +3,9 @@ const User = require('../models/User')
 
 const createUser = async (req, res, next) => {
   const { body } = req
+
+  if (body.password.length < 3) return res.status(400).send({ error: 'password should be at least 3 characters long' }).end()
+
   const saltRounds = 10
   const passwordHash = await bcrypt.hash(body.password, saltRounds)
 
@@ -16,7 +19,7 @@ const createUser = async (req, res, next) => {
 
   try {
     const savedUser = await user.save()
-    res.status(200).json(savedUser).end()
+    res.status(201).json(savedUser).end()
   } catch (err) {
     next(err)
   }
