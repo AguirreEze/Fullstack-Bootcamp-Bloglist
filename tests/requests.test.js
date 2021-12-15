@@ -48,7 +48,7 @@ describe('Testing Post request on /api/blogs', () => {
     expect(res.body).toHaveLength(initialBlogs.length + 1)
   })
 
-  test('Post request missing likes properties will default to 0', async () => {
+  test.skip('Post request missing likes properties will default to 0', async () => {
     const newPost = {
       title: 'Testing some Posts',
       author: 'Ezequiel',
@@ -59,7 +59,7 @@ describe('Testing Post request on /api/blogs', () => {
     expect(res.body).toBe(0)
   })
 
-  test.skip('Post request missing title properties should return bad request', async () => {
+  test('Post request missing title properties should return bad request', async () => {
     const newPost = {
       author: 'Ezequiel',
       url: 'https://testing.test.com/',
