@@ -15,7 +15,11 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+  blogs: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Blog'
+  }]
 })
 
 userSchema.set('toJSON', {

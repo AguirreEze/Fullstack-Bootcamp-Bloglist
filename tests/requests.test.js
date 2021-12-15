@@ -2,11 +2,14 @@ const mongoose = require('mongoose')
 const supertest = require('supertest')
 const { app, server } = require('../index')
 const Blog = require('../models/Blog')
-const { initialBlogs } = require('./helper')
+const User = require('../models/User')
+const { initialBlogs, initialUsers } = require('./helper')
 
 const api = supertest(app)
 
 beforeEach(async () => {
+  await User.deleteMany({})
+  await User.insertMany(initialUsers)
   await Blog.deleteMany({})
   await Blog.insertMany(initialBlogs)
 })

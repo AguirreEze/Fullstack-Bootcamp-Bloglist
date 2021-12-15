@@ -5,6 +5,7 @@ const initialBlogs = [
     author: 'Michael Chan',
     url: 'https://reactpatterns.com/',
     likes: 7,
+    user: '5cfde22ade5f227463ff6a4d',
     __v: 0
   },
   {
@@ -29,6 +30,7 @@ const initialBlogs = [
     author: 'Robert C. Martin',
     url: 'http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll',
     likes: 10,
+    user: '5cfde192de5f227463ff6a4b',
     __v: 0
   },
   {
@@ -49,4 +51,22 @@ const initialBlogs = [
   }
 ]
 
-module.exports = { initialBlogs }
+const initialUsers = [{
+  username: 'mluukkai',
+  name: 'Matti Luukkainen',
+  password: 'asdqe23',
+  _id: '5cfde192de5f227463ff6a4b',
+  blogs: [
+  ]
+}, {
+  username: 'hellas',
+  name: 'Arto Hellas',
+  password: 'asdqe23',
+  _id: '5cfde22ade5f227463ff6a4d',
+  blogs: [
+  ]
+}
+
+]
+
+module.exports = { initialBlogs, initialUsers }
