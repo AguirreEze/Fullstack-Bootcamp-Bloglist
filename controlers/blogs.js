@@ -38,4 +38,18 @@ const deleteByID = (req, res, next) => {
     .catch(err => next(err))
 }
 
-module.exports = { getAllBlogs, addNewBlog, deleteByID }
+const updateByID = (req, res, next) => {
+  const { id } = req.params
+
+  const newBlogInfo = {
+    title: req.body.title,
+    author: req.body.author,
+    url: req.body.url,
+    likes: req.body.likes
+  }
+
+  Blog.findByIdAndUpdate(id, newBlogInfo, { new: true })
+    .then(updated => res.json(updated).status(200).end)
+    .catch(err => next(err))
+}
+module.exports = { getAllBlogs, addNewBlog, deleteByID, updateByID }

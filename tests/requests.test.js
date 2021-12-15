@@ -74,6 +74,22 @@ describe('Testing Delete request on /api/blogs', () => {
   })
 })
 
+describe('Testing blog Update by PUT method', () => {
+  test('updating a post changes its information', async () => {
+    const newBlog = {
+      title: 'Testing PUT',
+      author: 'Ezequiel',
+      url: 'https://testing.test.com/',
+      likes: 3
+    }
+    const { body } = await api.get('/api/blogs')
+    await api.put(`/api/blogs/${body[0].id}`)
+      .send(newBlog)
+    const updated = await Blog.find({ title: 'Testing PUT' })
+    expect(updated).not.toBe([])
+  })
+})
+
 afterAll(() => {
   mongoose.connection.close()
   server.close()
