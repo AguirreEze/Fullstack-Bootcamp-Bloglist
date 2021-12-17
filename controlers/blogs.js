@@ -20,9 +20,9 @@ blogRouter.post('/', async (request, response, next) => {
     title,
     author,
     url,
-    likes = 0,
-    token
+    likes = 0
   } = request.body
+  const { token } = request
 
   let decodedToken
   try {
@@ -52,7 +52,7 @@ blogRouter.post('/', async (request, response, next) => {
 
 blogRouter.delete('/:id', async (req, res, next) => {
   const { id } = req.params
-  const { token } = req.body
+  const { token } = req
 
   let decodedToken
   try {

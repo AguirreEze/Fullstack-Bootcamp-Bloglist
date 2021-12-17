@@ -5,7 +5,7 @@ const tokenExtractor = (req, res, next) => {
   if (authorization && authorization.toLowerCase().startsWith('bearer')) {
     token = authorization.substring(7)
   } else token = null
-  req.body.token = token
+  req.token = token
   next()
 }
 
