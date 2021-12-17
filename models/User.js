@@ -12,7 +12,7 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
-  password: {
+  passwordHash: {
     type: String,
     required: true
   },
@@ -27,7 +27,7 @@ userSchema.set('toJSON', {
     returnedObject.id = returnedObject._id
     delete returnedObject._id
     delete returnedObject.__v
-    delete returnedObject.password
+    delete returnedObject.passwordHash
   }
 }).plugin(uniqueValidator, { message: 'Error, Expected {PATH} to be unique' })
 
