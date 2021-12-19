@@ -3,14 +3,6 @@ const jwt = require('jsonwebtoken')
 const Blog = require('../models/Blog')
 const User = require('../models/User')
 
-// const getToken = (req) => {
-//   const authorization = req.get('authorization')
-//   if (authorization && authorization.toLocaleLowerCase().startsWith('bearer')) {
-//     return authorization.substring(7)
-//   }
-//   return null
-// }
-
 blogRouter.get('/', async (request, response, next) => {
   try {
     const blogs = await Blog.find({}).populate('user', {
@@ -69,13 +61,20 @@ blogRouter.delete('/:id', async (req, res, next) => {
 
   try {
     const blogToDelete = await Blog.findById(id)
-
+    if (!blogToDelete) return res.json({ error: 'blog not found' }).status(400).end()
     if (!(blogToDelete.user.toString() === decodedToken.id)) return res.status(401).json({ error: 'unauthorized' }).end()
   } catch (err) { return next(err) }
 
   try {
     const blog = await Blog.findByIdAndDelete(id)
-    if (blog === null) return res.json({ error: 'blog not found' }).status(400).end()
+
+    const user = await User.findById(decodedToken.id)
+    if (!user) return res.status(404).json({ error: 'user not found' })
+    const updatedUser = {
+      blogs: user.blogs.filter(e => e.toString() !== id)
+    }
+    await User.findByIdAndUpdate(decodedToken.id, updatedUser)
+
     return res.json(blog).status(200).end()
   } catch (err) { next(err) }
 })
