@@ -49,6 +49,19 @@ blogRouter.post('/', async (request, response, next) => {
   } catch (err) { next(err) }
 })
 
+blogRouter.get('/:id', async (req, res, next) => {
+  const { id } = req.params
+
+  try {
+    const blog = await (await Blog.findById(id)).populate('user', {
+      username: 1,
+      name: 1,
+      id: 1
+    })
+    return res.status(200).json(blog).end()
+  } catch (err) { next(err) }
+})
+
 blogRouter.delete('/:id', async (req, res, next) => {
   const { id } = req.params
   const { token } = req
