@@ -108,4 +108,21 @@ blogRouter.put('/:id', async (req, res, next) => {
   } catch (err) { next(err) }
 })
 
+blogRouter.post('/:id/comment', async (req, res, next) => {
+  const { id } = req.params
+  try {
+    const blog = await Blog.findById(id)
+    if (!blog) return res.json({ error: 'blog not found' }).status(400).end()
+
+    const data = {
+      ...blog.toJSON(),
+      comments: [...blog.comments, req.body.comment]
+    }
+    const updatedBlog = new Blog(data)
+
+    const saved = await updatedBlog.save()
+    return res.json(saved).status(200).end()
+  } catch (err) { next(err) }
+})
+
 module.exports = blogRouter
